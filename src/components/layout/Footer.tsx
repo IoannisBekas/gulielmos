@@ -21,16 +21,6 @@ export function Footer() {
             <p className="text-sm leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.4)" }}>
               Διαφυλάσσοντας την ιερή τέχνη της Βυζαντινής Αγιογραφίας για περισσότερο από 15 χρόνια. Κάθε έργο είναι χειροποίητο με αυγοτέμπερα και φύλλα χρυσού 22 καρατίων.
             </p>
-            {/* Social icons */}
-            <div className="flex gap-4">
-              {["IG", "FB", "YT"].map((s) => (
-                <a key={s} href="#"
-                  className="flex items-center justify-center w-9 h-9 rounded-full text-xs font-bold transition-all duration-300 hover:-translate-y-0.5"
-                  style={{ border: "1px solid rgba(212,175,55,0.3)", color: "rgba(212,175,55,0.7)" }}>
-                  {s}
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Links */}
@@ -86,8 +76,9 @@ export function Footer() {
         {/* Bottom */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4"
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
-            &copy; {new Date().getFullYear()} Gulielmos Hagiography. All rights reserved.
+          <p className="text-xs text-center sm:text-left" style={{ color: "rgba(255,255,255,0.25)" }}>
+            &copy; {new Date().getFullYear()} Gulielmos Hagiography. All rights reserved. <br className="sm:hidden" />
+            <span className="hidden sm:inline"> | </span> Δημιουργήθηκε από την <span style={{ color: "rgba(212,175,55,0.8)", fontWeight: 600 }}>BISOLUTIONS.GROUP</span>
           </p>
           <p className="text-xs" style={{ color: "rgba(212,175,55,0.3)" }}>
             Χειροποίητα με ❤ & Πίστη
