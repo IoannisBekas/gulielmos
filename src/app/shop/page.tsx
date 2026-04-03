@@ -54,13 +54,13 @@ export default function ShopPage() {
             initial={{ opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif font-bold leading-[1.2] mb-6 pt-2"
+            className="font-serif font-bold leading-normal mb-4"
           >
-            <span className="block text-4xl sm:text-5xl lg:text-6xl" style={{ color: "#111" }}>
+            <span className="block text-4xl sm:text-5xl lg:text-6xl py-2" style={{ color: "#111" }}>
               Χειροποίητες
             </span>
             <span
-              className="block text-4xl sm:text-5xl lg:text-6xl mt-1"
+              className="block text-4xl sm:text-5xl lg:text-6xl py-2 -mt-4 sm:-mt-6"
               style={{
                 background: "linear-gradient(135deg, #8b0000 0%, #c0392b 40%, #8b0000 100%)",
                 WebkitBackgroundClip: "text",

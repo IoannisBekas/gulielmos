@@ -76,7 +76,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-[1.2] mb-6 pt-2"
+            className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-relaxed mb-4 py-2"
             style={{ color: "#111" }}
           >
             Επικοινωνήστε{" "}

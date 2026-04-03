@@ -64,19 +64,19 @@ export default function Home() {
                 </span>
               </motion.div>
 
-              {/* Title — fixed: smaller sizes + word-break to prevent clipping */}
+              {/* Title — fixed clipping by using leading-normal and py-2 on spans */}
               <motion.h1
                 initial={{ opacity: 0, y: 36 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="font-serif font-bold leading-[1.2] mb-6 pt-2"
+                className="font-serif font-bold leading-normal mb-4"
                 style={{ wordBreak: "break-word", hyphens: "auto" }}
               >
-                <span className="block text-5xl sm:text-6xl lg:text-[4rem] xl:text-[5rem]" style={{ color: "#111" }}>
+                <span className="block text-5xl sm:text-6xl lg:text-[4rem] xl:text-[5rem] py-2" style={{ color: "#111" }}>
                   Βυζαντινή
                 </span>
                 <span
-                  className="block text-5xl sm:text-6xl lg:text-[4rem] xl:text-[5rem] mt-1"
+                  className="block text-5xl sm:text-6xl lg:text-[4rem] xl:text-[5rem] py-2 -mt-4 sm:-mt-6"
                   style={{
                     background: "linear-gradient(135deg, #8b0000 0%, #c0392b 40%, #8b0000 100%)",
                     WebkitBackgroundClip: "text",
