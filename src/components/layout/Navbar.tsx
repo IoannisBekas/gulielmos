@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { Phone, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -68,22 +68,28 @@ export function Navbar() {
                 </Link>
               ))}
 
-              <button
-                className="relative p-2 transition-colors"
-                style={{ color: "#444" }}
-                aria-label="Καλάθι"
+              <a href="tel:2104297090"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold tracking-widest transition-all duration-300 hover:scale-105"
+                style={{ background: "#8b0000", color: "#fff", boxShadow: "0 4px 15px rgba(139,0,0,0.3)" }}
               >
-                <ShoppingCart size={18} />
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-white"
-                  style={{ background: "#8b0000" }}>
-                  0
-                </span>
-              </button>
+                <Phone size={16} />
+                210 429 7090
+              </a>
             </div>
+
+            {/* Mobile Actions */}
+            <div className="flex md:hidden items-center gap-4">
+              <a href="tel:2104297090"
+                className="p-2 rounded-full transition-colors"
+                style={{ background: "rgba(139,0,0,0.1)", color: "#8b0000" }}
+                aria-label="Τηλέφωνο"
+              >
+                <Phone size={20} />
+              </a>
 
             {/* Mobile Toggle */}
             <button
-              className="md:hidden p-2 transition-colors"
+              className="p-2 transition-colors"
               style={{ color: "#444" }}
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Μενού"
@@ -100,6 +106,7 @@ export function Navbar() {
                 </motion.div>
               </AnimatePresence>
             </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -119,7 +126,14 @@ export function Navbar() {
             <div className="absolute top-0 left-0 right-0 h-px"
               style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.5), transparent)" }} />
 
-            <div className="flex flex-col items-center gap-8">
+              <div className="flex flex-col items-center gap-10">
+                <a href="tel:2104297090"
+                  className="flex items-center gap-3 px-8 py-4 rounded-full text-xl font-bold tracking-widest transition-all duration-300 shadow-xl"
+                  style={{ background: "#8b0000", color: "#fff" }}
+                >
+                  <Phone size={24} />
+                  210 429 7090
+                </a>
               {NAV_LINKS.map((link, i) => (
                 <motion.div
                   key={link.href}
