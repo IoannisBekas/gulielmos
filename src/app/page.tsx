@@ -96,7 +96,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 36 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="font-serif font-bold leading-[1.05] mb-6"
+                className="font-serif font-bold leading-[1.2] mb-6 pt-2"
                 style={{ wordBreak: "break-word", hyphens: "auto" }}
               >
                 <span className="block text-5xl sm:text-6xl lg:text-[4rem] xl:text-[5rem]" style={{ color: "#111" }}>
