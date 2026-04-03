@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Star, Award, Palette } from "lucide-react";
+import { ArrowRight, Star, Award, Palette, Phone } from "lucide-react";
 import { useRef, useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
 
@@ -146,6 +146,13 @@ export default function Home() {
                   style={{ border: "1px solid rgba(212,175,55,0.5)", color: "#aa8c2c" }}>
                   Η Τέχνη Μας
                 </Link>
+
+                <a href="tel:2104297090"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm font-semibold tracking-widest rounded-full transition-all duration-300 hover:bg-[#8b0000]/5"
+                  style={{ border: "1px solid rgba(139,0,0,0.3)", color: "#8b0000" }}>
+                  <Phone size={15} />
+                  210 429 7090
+                </a>
               </motion.div>
 
               {/* Stats */}
