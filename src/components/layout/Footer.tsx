@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { SITE } from "@/data/site";
 
 export function Footer() {
   return (
@@ -13,9 +14,9 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-4">
             <div className="mb-6">
-              <h3 className="text-2xl font-serif font-bold tracking-[0.1em] text-white">Ζώρζος Γουλιέλμος</h3>
+              <h3 className="text-2xl font-serif font-bold tracking-[0.1em] text-white">{SITE.nameGreek}</h3>
               <p className="text-[10px] tracking-[0.35em] uppercase mt-1" style={{ color: "rgba(212,175,55,0.5)" }}>
-                Βυζαντινή Αγιογραφία
+                {SITE.tagline}
               </p>
             </div>
             <p className="text-sm leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.4)" }}>
@@ -56,25 +57,25 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin size={14} className="mt-0.5 flex-shrink-0" style={{ color: "rgba(212,175,55,0.5)" }} />
                 <a 
-                  href="https://maps.google.com/maps?q=Πραξιτέλους 161, Πειραιάς, 18535" 
+                  href={SITE.googleMapsUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-sm transition-colors hover:text-white" 
                   style={{ color: "rgba(255,255,255,0.4)" }}
                 >
-                  Πραξιτέλους 161, Πειραιάς, 18535, ΑΤΤΙΚΗΣ
+                  {SITE.addressFull}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={14} className="flex-shrink-0" style={{ color: "rgba(212,175,55,0.5)" }} />
-                <a href="mailto:info@gulielmos.gr" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  info@gulielmos.gr
+                <a href={`mailto:${SITE.email}`} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  {SITE.email}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={14} className="flex-shrink-0" style={{ color: "rgba(212,175,55,0.5)" }} />
-                <a href="tel:2104297090" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  210 429 7090
+                <a href={SITE.phoneHref} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  {SITE.phone}
                 </a>
               </li>
             </ul>
@@ -82,7 +83,7 @@ export function Footer() {
             {/* Google Maps Embed */}
             <div className="w-full h-32 rounded-lg overflow-hidden border opacity-70 hover:opacity-100 transition-opacity" style={{ borderColor: "rgba(212,175,55,0.2)" }}>
               <iframe
-                src="https://maps.google.com/maps?q=Πραξιτέλους%20161,%20Πειραιάς,%2018535&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                src={SITE.googleMapsEmbed}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -99,8 +100,8 @@ export function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4"
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <p className="text-xs text-center sm:text-left" style={{ color: "rgba(255,255,255,0.25)" }}>
-            &copy; {new Date().getFullYear()} Gulielmos Hagiography. All rights reserved. <br className="sm:hidden" />
-            <span className="hidden sm:inline"> | </span> Δημιουργήθηκε από την <a href="https://bisolutions.group" target="_blank" rel="noopener noreferrer" className="hover:underline transition-all" style={{ color: "rgba(212,175,55,0.8)", fontWeight: 600 }}>BISOLUTIONS.GROUP</a>
+            &copy; {new Date().getFullYear()} {SITE.copyright}. All rights reserved. <br className="sm:hidden" />
+            <span className="hidden sm:inline"> | </span> Δημιουργήθηκε από την <a href={SITE.madeBy.url} target="_blank" rel="noopener noreferrer" className="hover:underline transition-all" style={{ color: "rgba(212,175,55,0.8)", fontWeight: 600 }}>{SITE.madeBy.name}</a>
           </p>
           <p className="text-xs" style={{ color: "rgba(212,175,55,0.3)" }}>
             Χειροποίητα με ❤ & Πίστη

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Phone, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SITE } from "@/data/site";
 
 const NAV_LINKS = [
   { href: "/", label: "Αρχική" },
@@ -43,11 +44,11 @@ export function Navbar() {
             <Link href="/" className="flex flex-col leading-none group">
               <span className="text-xl font-serif font-bold tracking-[0.18em] transition-colors duration-300"
                 style={{ color: "#1a1a1a" }}>
-                GULIELMOS
+                {SITE.name}
               </span>
               <span className="text-[9px] tracking-[0.32em] uppercase mt-0.5"
                 style={{ color: "rgba(170,140,44,0.8)" }}>
-                Βυζαντινή Αγιογραφία
+                {SITE.tagline}
               </span>
             </Link>
 
@@ -68,18 +69,18 @@ export function Navbar() {
                 </Link>
               ))}
 
-              <a href="tel:2104297090"
+              <a href={SITE.phoneHref}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold tracking-widest transition-all duration-300 hover:scale-105"
                 style={{ background: "#8b0000", color: "#fff", boxShadow: "0 4px 15px rgba(139,0,0,0.3)" }}
               >
                 <Phone size={16} />
-                210 429 7090
+                {SITE.phone}
               </a>
             </div>
 
             {/* Mobile Actions */}
             <div className="flex md:hidden items-center gap-4">
-              <a href="tel:2104297090"
+              <a href={SITE.phoneHref}
                 className="p-2 rounded-full transition-colors"
                 style={{ background: "rgba(139,0,0,0.1)", color: "#8b0000" }}
                 aria-label="Τηλέφωνο"
@@ -127,12 +128,12 @@ export function Navbar() {
               style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.5), transparent)" }} />
 
               <div className="flex flex-col items-center gap-10">
-                <a href="tel:2104297090"
+                <a href={SITE.phoneHref}
                   className="flex items-center gap-3 px-8 py-4 rounded-full text-xl font-bold tracking-widest transition-all duration-300 shadow-xl"
                   style={{ background: "#8b0000", color: "#fff" }}
                 >
                   <Phone size={24} />
-                  210 429 7090
+                  {SITE.phone}
                 </a>
               {NAV_LINKS.map((link, i) => (
                 <motion.div

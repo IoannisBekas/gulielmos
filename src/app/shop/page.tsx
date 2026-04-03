@@ -5,69 +5,7 @@ import Image from "next/image";
 import { ArrowRight, Filter } from "lucide-react";
 import { useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
-
-import pantocratorImg from "../../../public/pantocrator.png";
-import theotokosImg from "../../../public/theotokos.png";
-import saintGeorgeImg from "../../../public/saint_george.png";
-
-const CATEGORIES = ["Όλα", "Δεσποτικές", "Θεομητορικές", "Αγίων"];
-
-const ICONS = [
-  {
-    title: "Ιησούς Χριστός Παντοκράτωρ",
-    subtitle: "Αυγοτέμπερα & Χρυσός 22K",
-    price: "από €380",
-    tag: "Bestseller",
-    category: "Δεσποτικές",
-    dimensions: "40 × 30 εκ.",
-    src: pantocratorImg,
-  },
-  {
-    title: "Παναγία Γλυκοφιλούσα",
-    subtitle: "Βυζαντινή Τεχνοτροπία",
-    price: "από €420",
-    tag: "Θεομητορική",
-    category: "Θεομητορικές",
-    dimensions: "50 × 35 εκ.",
-    src: theotokosImg,
-  },
-  {
-    title: "Άγιος Γεώργιος",
-    subtitle: "Αυγοτέμπερα & Χρυσός 22K",
-    price: "από €350",
-    tag: "Δεσποτική",
-    category: "Αγίων",
-    dimensions: "45 × 32 εκ.",
-    src: saintGeorgeImg,
-  },
-  {
-    title: "Χριστός Ευλογών",
-    subtitle: "Κλασική Βυζαντινή Τεχνοτροπία",
-    price: "από €400",
-    tag: "Δεσποτική",
-    category: "Δεσποτικές",
-    dimensions: "55 × 40 εκ.",
-    src: pantocratorImg,
-  },
-  {
-    title: "Παναγία Βρεφοκρατούσα",
-    subtitle: "Αυγοτέμπερα & Χρυσός 22K",
-    price: "από €450",
-    tag: "Θεομητορική",
-    category: "Θεομητορικές",
-    dimensions: "60 × 45 εκ.",
-    src: theotokosImg,
-  },
-  {
-    title: "Άγιος Νικόλαος",
-    subtitle: "Παραδοσιακή Αγιογραφία",
-    price: "από €320",
-    tag: "Αγίων",
-    category: "Αγίων",
-    dimensions: "40 × 30 εκ.",
-    src: saintGeorgeImg,
-  },
-];
+import { PRODUCTS, CATEGORIES } from "@/data/products";
 
 export default function ShopPage() {
   const [activeCategory, setActiveCategory] = useState("Όλα");
@@ -75,8 +13,8 @@ export default function ShopPage() {
   const [modalItem, setModalItem] = useState<string | undefined>();
 
   const filtered = activeCategory === "Όλα"
-    ? ICONS
-    : ICONS.filter((ic) => ic.category === activeCategory);
+    ? PRODUCTS
+    : PRODUCTS.filter((ic) => ic.category === activeCategory);
 
   const openContact = (item: string) => {
     setModalItem(item);
@@ -88,7 +26,7 @@ export default function ShopPage() {
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} artworkTitle={modalItem} />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section className="relative pt-32 pb-16 sm:pt-40 sm:pb-20 overflow-hidden">
+      <section className="relative pt-32 pb-16 sm:pt-40 sm:pb-20 overflow-x-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-5%] left-[-10%] w-[45vw] h-[45vw] rounded-full"
             style={{ background: "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)" }} />
@@ -208,7 +146,7 @@ export default function ShopPage() {
                   className="group block relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-500 w-full text-left"
                 >
                   <Image
-                    src={art.src}
+                    src={art.image}
                     alt={art.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"

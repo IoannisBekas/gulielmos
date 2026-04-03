@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
+import { SITE } from "@/data/site";
 
 const fadeUp = {
   initial: { opacity: 0, y: 32 },
@@ -16,25 +17,25 @@ const CONTACT_INFO = [
   {
     icon: MapPin,
     label: "Διεύθυνση",
-    value: "Πραξιτέλους 161, Πειραιάς 18535",
-    href: "https://maps.google.com/maps?q=Πραξιτέλους+161,+Πειραιάς,+18535",
+    value: SITE.address,
+    href: SITE.googleMapsUrl,
   },
   {
     icon: Phone,
     label: "Τηλέφωνο",
-    value: "210 429 7090",
-    href: "tel:2104297090",
+    value: SITE.phone,
+    href: SITE.phoneHref,
   },
   {
     icon: Mail,
     label: "Email",
-    value: "info@gulielmos.gr",
-    href: "mailto:info@gulielmos.gr",
+    value: SITE.email,
+    href: `mailto:${SITE.email}`,
   },
   {
     icon: Clock,
     label: "Ωράριο",
-    value: "Δευτ – Παρ: 09:00 – 18:00",
+    value: SITE.hours,
     href: undefined,
   },
 ];
@@ -47,7 +48,7 @@ export default function ContactPage() {
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section className="relative pt-32 pb-16 sm:pt-40 sm:pb-24 overflow-hidden">
+      <section className="relative pt-32 pb-16 sm:pt-40 sm:pb-24 overflow-x-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-5%] right-[-10%] w-[45vw] h-[45vw] rounded-full"
             style={{ background: "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)" }} />
@@ -205,7 +206,7 @@ export default function ContactPage() {
                   boxShadow: "0 8px 40px rgba(0,0,0,0.08)",
                 }}>
                 <iframe
-                  src="https://maps.google.com/maps?q=Πραξιτέλους%20161,%20Πειραιάς,%2018535&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  src={SITE.googleMapsEmbed}
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: "400px" }}
@@ -227,7 +228,7 @@ export default function ContactPage() {
                 <div className="flex items-center gap-3">
                   <MapPin size={16} style={{ color: "#8b0000" }} />
                   <span className="text-sm font-semibold" style={{ color: "#333" }}>
-                    Πραξιτέλους 161, Πειραιάς
+                    {SITE.addressShort}
                   </span>
                 </div>
               </div>
@@ -261,13 +262,13 @@ export default function ContactPage() {
           <p className="text-base leading-relaxed mb-10" style={{ color: "rgba(255,255,255,0.5)" }}>
             Μοιραστείτε μαζί μας το όραμά σας και ας δημιουργήσουμε μαζί ένα μοναδικό έργο τέχνης.
           </p>
-          <a href="tel:2104297090"
+          <a href={SITE.phoneHref}
             className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-bold tracking-widest uppercase text-sm text-white transition-all duration-300 hover:scale-105"
             style={{
               background: "linear-gradient(135deg, #8b0000, #6b0000)",
               boxShadow: "0 0 40px rgba(139,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)",
             }}>
-            <Phone size={18} /> Καλέστε: 210 429 7090
+            <Phone size={18} /> Καλέστε: {SITE.phone}
           </a>
         </motion.div>
       </section>

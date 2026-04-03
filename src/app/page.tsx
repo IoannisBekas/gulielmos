@@ -6,35 +6,8 @@ import Image from "next/image";
 import { ArrowRight, Star, Award, Palette, Phone } from "lucide-react";
 import { useRef, useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
-
-// Static Image imports for perfect Github Pages path resolution
-import pantocratorImg from "../../public/pantocrator.png";
-import theotokosImg from "../../public/theotokos.png";
-import saintGeorgeImg from "../../public/saint_george.png";
-
-const ARTWORKS = [
-  {
-    title: "Ιησούς Χριστός Παντοκράτωρ",
-    subtitle: "Αυγοτέμπερα & Χρυσός 22K",
-    price: "από €380",
-    tag: "Bestseller",
-    src: pantocratorImg,
-  },
-  {
-    title: "Παναγία Γλυκοφιλούσα",
-    subtitle: "Βυζαντινή Τεχνοτροπία",
-    price: "από €420",
-    tag: "Θεομητορική",
-    src: theotokosImg,
-  },
-  {
-    title: "Άγιος Γεώργιος",
-    subtitle: "Αυγοτέμπερα & Χρυσός 22K",
-    price: "από €350",
-    tag: "Δεσποτική",
-    src: saintGeorgeImg,
-  },
-];
+import { SITE } from "@/data/site";
+import { FEATURED_PRODUCTS, HERO_PRODUCT } from "@/data/products";
 
 
 export default function Home() {
@@ -52,11 +25,11 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-hidden" style={{ background: "#fdfbf5", color: "#1a1a1a" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ background: "#fdfbf5", color: "#1a1a1a" }}>
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} artworkTitle={modalItem} />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section ref={heroRef} className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: "100svh" }}>
+      <section ref={heroRef} className="relative flex items-center justify-center overflow-x-hidden" style={{ minHeight: "100svh" }}>
 
         {/* Subtle warm background orbs */}
         <div className="absolute inset-0 z-0 pointer-events-none">
@@ -156,9 +129,9 @@ export default function Home() {
                 transition={{ duration: 0.9, delay: 0.65 }}
                 className="mt-12 flex items-center gap-10 justify-center lg:justify-start"
               >
-                {[["50+", "Έργα"], ["15+", "Χρόνια"], ["200+", "Πελάτες"]].map(([num, label]) => (
+                {SITE.stats.map(({ value, label }) => (
                   <div key={label} className="text-center">
-                    <div className="text-2xl font-serif font-bold" style={{ color: "#8b0000" }}>{num}</div>
+                    <div className="text-2xl font-serif font-bold" style={{ color: "#8b0000" }}>{value}</div>
                     <div className="text-[10px] uppercase tracking-widest mt-1" style={{ color: "#999" }}>{label}</div>
                   </div>
                 ))}
@@ -186,8 +159,8 @@ export default function Home() {
                   }}
                 >
                   <Image
-                    src={pantocratorImg}
-                    alt="Ιησούς Χριστός Παντοκράτωρ"
+                    src={HERO_PRODUCT.image}
+                    alt={HERO_PRODUCT.title}
                     width={500}
                     height={620}
                     className="w-full max-w-xs sm:max-w-sm lg:max-w-md object-cover"
@@ -210,7 +183,7 @@ export default function Home() {
                   }}
                 >
                   <span className="text-[10px] tracking-wider block mb-0.5" style={{ color: "#999" }}>από</span>
-                  <span style={{ color: "#8b0000" }}>€ 380</span>
+                  <span style={{ color: "#8b0000" }}>{HERO_PRODUCT.price.replace('από ', '')}</span>
                 </motion.div>
               </div>
             </motion.div>
@@ -257,7 +230,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {ARTWORKS.map((art, i) => (
+            {FEATURED_PRODUCTS.map((art, i) => (
               <motion.div
                 key={art.title}
                 initial={{ opacity: 0, y: 40 }}
@@ -267,7 +240,7 @@ export default function Home() {
               >
                 <div onClick={() => openContact(art.title)} className="group block relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-500 w-full text-left">
                   <Image
-                    src={art.src}
+                    src={art.image}
                     alt={art.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"

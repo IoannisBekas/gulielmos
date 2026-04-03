@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Award, Clock, Palette, Church, Sparkles, BookOpen } from "lucide-react";
+import { ArrowRight, Clock, Church, Palette, Sparkles, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
+import { SITE } from "@/data/site";
+import { BIO_PARAGRAPHS, MILESTONES, SERVICES, PHILOSOPHY, MATERIALS } from "@/data/about";
 
 import workshopImg from "../../../public/workshop.png";
 import pantocratorImg from "../../../public/pantocrator.png";
@@ -17,37 +19,7 @@ const fadeUp = {
   transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
 };
 
-const MILESTONES = [
-  { year: "1961", text: "Γεννήθηκε στον Πειραιά, σε οικογένεια με βαθιές καλλιτεχνικές ρίζες." },
-  { year: "1966", text: "Από μόλις 5 ετών εμφανίζει έντονη κλίση στη ζωγραφική και το σχέδιο." },
-  { year: "1972", text: "Ξεκινά να εργάζεται με λαδομπογιές, εμβαθύνοντας στις τεχνικές της ζωγραφικής." },
-  { year: "1980", text: "Πωλεί τις πρώτες του εικόνες και αρχίζει να χτίζει τη φήμη του ως αγιογράφος." },
-  { year: "1987", text: "Ξεκινά την επαγγελματική του πορεία ως αγιογράφος, αφιερώνοντας πλήρως τη ζωή του στην ιερή τέχνη." },
-  { year: "Σήμερα", text: "Με πάνω από 35 χρόνια εμπειρίας, συνεχίζει να δημιουργεί στο εργαστήριό του στον Πειραιά." },
-];
-
-const SERVICES = [
-  {
-    icon: Church,
-    title: "Εικονογράφηση Ναών",
-    desc: "Ολοκληρωμένη αγιογράφηση εσωτερικών χώρων ιερών ναών, ακολουθώντας αυστηρά την παραδοσιακή βυζαντινή τεχνοτροπία.",
-  },
-  {
-    icon: Palette,
-    title: "Εικόνες κατά Παραγγελία",
-    desc: "Χειροποίητες εικόνες σε κάθε μέγεθος, φιλοτεχνημένες με αυγοτέμπερα και φύλλα χρυσού 22 καρατίων.",
-  },
-  {
-    icon: Sparkles,
-    title: "Συντήρηση & Αναπαλαίωση",
-    desc: "Εξειδικευμένη συντήρηση και αποκατάσταση παλαιών και σύγχρονων εικόνων, με σεβασμό στο πρωτότυπο έργο.",
-  },
-  {
-    icon: BookOpen,
-    title: "Εκτίμηση Έργων",
-    desc: "Επαγγελματική εκτίμηση αξίας έργων βυζαντινής αγιογραφίας, για ιδιώτες και ιδρύματα.",
-  },
-];
+const ICON_MAP = { Church, Palette, Sparkles, BookOpen } as const;
 
 export default function AboutPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,7 +29,7 @@ export default function AboutPage() {
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden">
+      <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-x-hidden">
         {/* Background orbs */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-5%] left-[-10%] w-[45vw] h-[45vw] rounded-full"
@@ -186,25 +158,9 @@ export default function AboutPage() {
               </h2>
 
               <div className="space-y-5 text-base leading-relaxed" style={{ color: "#555" }}>
-                <p>
-                  Ο <strong style={{ color: "#333" }}>Ζώρζος Γουλιέλμος</strong> γεννήθηκε στον Πειραιά
-                  το 1961, σε μια οικογένεια με βαθιές καλλιτεχνικές ρίζες. Ο ένας παππούς του ήταν ποιητής,
-                  πεζογράφος και αρθρογράφος, ενώ ο άλλος ήταν ζωγράφος και αγιογράφος — κληρονομώντας έτσι
-                  μια μοναδική καλλιτεχνική παράδοση που θα καθόριζε τη ζωή του.
-                </p>
-                <p>
-                  Από την ηλικία μόλις 5 ετών εμφάνισε εξαιρετική κλίση στη ζωγραφική. Το 1972, σε ηλικία
-                  μόλις 11 ετών, άρχισε να εργάζεται με λαδομπογιές, βαθαίνοντας τη γνώση του στις κλασικές
-                  τεχνικές. Η πρώτη του εμπορική επιτυχία ήρθε το 1980, όταν πώλησε τις πρώτες του εικόνες,
-                  και από το 1987 δραστηριοποιείται αποκλειστικά ως επαγγελματίας αγιογράφος.
-                </p>
-                <p>
-                  Σήμερα, με περισσότερα από <strong style={{ color: "#333" }}>35 χρόνια εμπειρίας</strong>,
-                  διατηρεί το εργαστήριό του στην οδό Πραξιτέλους 161 στον Πειραιά, όπου συνεχίζει να
-                  δημιουργεί ακολουθώντας πιστά τον <strong style={{ color: "#333" }}>παραδοσιακό τρόπο
-                  αγιογράφησης</strong> — χρησιμοποιώντας αυγοτέμπερα, φυσικές χρωστικές και φύλλα χρυσού
-                  22 καρατίων, όπως ακριβώς οι Βυζαντινοί δάσκαλοι πριν από αιώνες.
-                </p>
+                {BIO_PARAGRAPHS.map((html, i) => (
+                  <p key={i} dangerouslySetInnerHTML={{ __html: html }} />
+                ))}
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -326,7 +282,7 @@ export default function AboutPage() {
               >
                 <div className="w-14 h-14 rounded-xl mx-auto mb-5 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                   style={{ background: "rgba(212,175,55,0.08)" }}>
-                  <s.icon size={24} style={{ color: "#aa8c2c" }} />
+                  {(() => { const Icon = ICON_MAP[s.iconName]; return <Icon size={24} style={{ color: "#aa8c2c" }} />; })()}
                 </div>
                 <h3 className="font-serif font-bold text-lg mb-3" style={{ color: "#1a1a1a" }}>{s.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "#777" }}>{s.desc}</p>
@@ -355,11 +311,10 @@ export default function AboutPage() {
                 ✦ Φιλοσοφία ✦
               </p>
               <blockquote className="text-2xl sm:text-3xl font-serif leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.9)" }}>
-                &ldquo;Η αγιογραφία δεν είναι απλά ζωγραφική. Είναι προσευχή που παίρνει μορφή, πίστη
-                που γίνεται χρώμα, παράδοση αιώνων που ζωντανεύει σε κάθε πινελιά.&rdquo;
+                &ldquo;{PHILOSOPHY.quote}&rdquo;
               </blockquote>
               <p className="text-sm font-semibold tracking-widest" style={{ color: "rgba(212,175,55,0.7)" }}>
-                — Ζώρζος Γουλιέλμος
+                — {PHILOSOPHY.author}
               </p>
             </motion.div>
 
@@ -404,23 +359,7 @@ export default function AboutPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: "🥚",
-                title: "Αυγοτέμπερα",
-                text: "Η αρχαία τεχνική χρήσης κρόκου αυγού ως συνδετικού μέσου, που προσδίδει στα χρώματα εξαιρετική ανθεκτικότητα και βάθος — όπως ακριβώς στις εικόνες που επιβιώνουν εδώ και 1.000 χρόνια.",
-              },
-              {
-                icon: "✨",
-                title: "Φύλλο Χρυσού 22Κ",
-                text: "Γνήσιο φύλλο χρυσού 22 καρατίων εφαρμόζεται με παραδοσιακή τεχνική στα φωτοστέφανα και τα φόντα, δημιουργώντας τη χαρακτηριστική λάμψη της βυζαντινής εικόνας.",
-              },
-              {
-                icon: "🪵",
-                title: "Ξύλινα Πάνελ",
-                text: "Κάθε εικόνα ζωγραφίζεται σε ειδικά προετοιμασμένα ξύλινα πάνελ με επίστρωση γύψου (levkas), εξασφαλίζοντας σταθερότητα και μακροζωία για γενιές.",
-              },
-            ].map((item, i) => (
+            {MATERIALS.map((item, i) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 30 }}
