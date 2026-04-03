@@ -147,12 +147,6 @@ export default function Home() {
                   Η Τέχνη Μας
                 </Link>
 
-                <a href="tel:2104297090"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm font-semibold tracking-widest rounded-full transition-all duration-300 hover:bg-[#8b0000]/5"
-                  style={{ border: "1px solid rgba(139,0,0,0.3)", color: "#8b0000" }}>
-                  <Phone size={15} />
-                  210 429 7090
-                </a>
               </motion.div>
 
               {/* Stats */}
