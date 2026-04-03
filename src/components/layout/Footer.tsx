@@ -52,10 +52,18 @@ export function Footer() {
             <h4 className="text-xs font-bold tracking-[0.3em] uppercase mb-6" style={{ color: "rgba(212,175,55,0.7)" }}>
               Επικοινωνία
             </h4>
-            <ul className="space-y-4">
+            <ul className="space-y-4 mb-6">
               <li className="flex items-start gap-3">
                 <MapPin size={14} className="mt-0.5 flex-shrink-0" style={{ color: "rgba(212,175,55,0.5)" }} />
-                <span className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>Πραξιτέλους 161, Πειραιάς, 18535, ΑΤΤΙΚΗΣ</span>
+                <a 
+                  href="https://maps.google.com/maps?q=Πραξιτέλους 161, Πειραιάς, 18535" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm transition-colors hover:text-white" 
+                  style={{ color: "rgba(255,255,255,0.4)" }}
+                >
+                  Πραξιτέλους 161, Πειραιάς, 18535, ΑΤΤΙΚΗΣ
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={14} className="flex-shrink-0" style={{ color: "rgba(212,175,55,0.5)" }} />
@@ -70,6 +78,20 @@ export function Footer() {
                 </a>
               </li>
             </ul>
+            
+            {/* Google Maps Embed */}
+            <div className="w-full h-32 rounded-lg overflow-hidden border opacity-70 hover:opacity-100 transition-opacity" style={{ borderColor: "rgba(212,175,55,0.2)" }}>
+              <iframe
+                src="https://maps.google.com/maps?q=Πραξιτέλους%20161,%20Πειραιάς,%2018535&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={false}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Τοποθεσία Εργαστηρίου"
+              />
+            </div>
           </div>
         </div>
 
