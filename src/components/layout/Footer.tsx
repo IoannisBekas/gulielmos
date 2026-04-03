@@ -78,7 +78,7 @@ export function Footer() {
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <p className="text-xs text-center sm:text-left" style={{ color: "rgba(255,255,255,0.25)" }}>
             &copy; {new Date().getFullYear()} Gulielmos Hagiography. All rights reserved. <br className="sm:hidden" />
-            <span className="hidden sm:inline"> | </span> Δημιουργήθηκε από την <span style={{ color: "rgba(212,175,55,0.8)", fontWeight: 600 }}>BISOLUTIONS.GROUP</span>
+            <span className="hidden sm:inline"> | </span> Δημιουργήθηκε από την <a href="https://bisolutions.group" target="_blank" rel="noopener noreferrer" className="hover:underline transition-all" style={{ color: "rgba(212,175,55,0.8)", fontWeight: 600 }}>BISOLUTIONS.GROUP</a>
           </p>
           <p className="text-xs" style={{ color: "rgba(212,175,55,0.3)" }}>
             Χειροποίητα με ❤ & Πίστη
