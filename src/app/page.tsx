@@ -7,35 +7,35 @@ import { ArrowRight, Star, Award, Palette, Phone } from "lucide-react";
 import { useRef, useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
 
+// Static Image imports for perfect Github Pages path resolution
+import pantocratorImg from "../../public/pantocrator.png";
+import theotokosImg from "../../public/theotokos.png";
+import saintGeorgeImg from "../../public/saint_george.png";
+
 const ARTWORKS = [
   {
     title: "Ιησούς Χριστός Παντοκράτωρ",
     subtitle: "Αυγοτέμπερα & Χρυσός 22K",
     price: "από €380",
     tag: "Bestseller",
-    src: "/pantocrator.png",
+    src: pantocratorImg,
   },
   {
     title: "Παναγία Γλυκοφιλούσα",
     subtitle: "Βυζαντινή Τεχνοτροπία",
     price: "από €420",
     tag: "Θεομητορική",
-    src: "/theotokos.png",
+    src: theotokosImg,
   },
   {
     title: "Άγιος Γεώργιος",
     subtitle: "Αυγοτέμπερα & Χρυσός 22K",
     price: "από €350",
     tag: "Δεσποτική",
-    src: "/saint_george.png",
+    src: saintGeorgeImg,
   },
 ];
 
-const FEATURES = [
-  { icon: Palette, label: "Αυγοτέμπερα", desc: "Αρχαία βυζαντινή τεχνική με φυσικά υλικά" },
-  { icon: Star, label: "Χρυσός 22K", desc: "Επαλειφόμενα φύλλα χρυσού υψηλής καθαρότητας" },
-  { icon: Award, label: "Πιστοποιημένα", desc: "Κάθε έργο συνοδεύεται από πιστοποιητικό γνησιότητας" },
-];
 
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -192,7 +192,7 @@ export default function Home() {
                   }}
                 >
                   <Image
-                    src="/pantocrator.png"
+                    src={pantocratorImg}
                     alt="Ιησούς Χριστός Παντοκράτωρ"
                     width={500}
                     height={620}
@@ -328,34 +328,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════ FEATURES ═══════════════ */}
-      <section className="relative py-24 px-4 sm:px-8"
-        style={{ background: "linear-gradient(180deg, #fdfbf5 0%, #f5f0e6 100%)" }}>
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          {FEATURES.map((f, i) => (
-            <motion.div
-              key={f.label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.7 }}
-              className="group text-center p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1"
-              style={{
-                background: "#fff",
-                border: "1px solid rgba(212,175,55,0.2)",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-              }}
-            >
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4"
-                style={{ background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.25)" }}>
-                <f.icon size={20} style={{ color: "#aa8c2c" }} />
-              </div>
-              <h3 className="font-serif text-lg font-bold mb-2" style={{ color: "#1a1a1a" }}>{f.label}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "#777" }}>{f.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
       {/* ═══════════════ CTA ═══════════════ */}
       <section className="relative py-28 px-4 sm:px-8 overflow-hidden"
