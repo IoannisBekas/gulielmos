@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, X } from "lucide-react";
+import { SITE } from "@/data/site";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -10,6 +11,10 @@ interface ContactModalProps {
 }
 
 export function ContactModal({ isOpen, onClose, artworkTitle }: ContactModalProps) {
+  const emailSubject = artworkTitle
+    ? `Ενδιαφέρον για το έργο: ${artworkTitle}`
+    : "Ενδιαφέρον για χειροποίητη αγιογραφία";
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -18,7 +23,7 @@ export function ContactModal({ isOpen, onClose, artworkTitle }: ContactModalProp
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-          style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(6px)" }}
+          style={{ background: "rgba(20,14,11,0.62)", backdropFilter: "blur(10px)" }}
           onClick={onClose}
         >
           <motion.div
@@ -26,64 +31,72 @@ export function ContactModal({ isOpen, onClose, artworkTitle }: ContactModalProp
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-md rounded-2xl overflow-hidden text-center"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            className="relative w-full max-w-lg overflow-hidden rounded-[2rem] text-left"
             style={{
-              background: "#fff",
-              boxShadow: "0 30px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(212,175,55,0.2)",
+              background: "#fffaf2",
+              boxShadow: "0 36px 90px rgba(0,0,0,0.28), 0 0 0 1px rgba(182,137,49,0.18)",
             }}
           >
-            {/* Gold top bar */}
-            <div className="h-1" style={{ background: "linear-gradient(to right, #8b0000, #d4af37, #8b0000)" }} />
-
-            {/* Close button */}
             <button
+              type="button"
               onClick={onClose}
-              className="absolute top-4 right-4 p-1.5 rounded-full transition-colors hover:bg-black/5"
-              style={{ color: "#999" }}
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full hover:bg-black/5"
+              style={{ color: "#7b7368" }}
               aria-label="Κλείσιμο"
             >
               <X size={18} />
             </button>
 
-            <div className="p-8 flex flex-col items-center">
-              <div 
-                className="w-16 h-16 rounded-full flex items-center justify-center mb-6"
-                style={{ background: "linear-gradient(135deg, #fdfbf7, #f4ecd8)", border: "1px solid #e5e0d5" }}
-              >
-                <Phone size={28} style={{ color: "#8b0000" }} />
-              </div>
-              
-              <h3 className="text-2xl font-serif font-bold mb-2" style={{ color: "#111" }}>
-                Επικοινωνήστε Μαζί μας
+            <div className="p-8 sm:p-10">
+              <span className="section-eyebrow mb-5">Άμεση επικοινωνία</span>
+              <h3 className="section-title text-4xl text-[#171310] sm:text-5xl">
+                Συζητήστε το έργο σας
               </h3>
-              
-              {artworkTitle && (
-                <p className="text-sm mb-6" style={{ color: "#888" }}>
-                  Για το έργο: <span className="font-medium" style={{ color: "#8b0000" }}>{artworkTitle}</span>
-                </p>
-              )}
-              {!artworkTitle && (
-                <p className="text-sm mb-6" style={{ color: "#888" }}>
-                  Για περισσότερες πληροφορίες ή παραγγελίες, καλέστε μας.
-                </p>
-              )}
+              <p className="mt-5 text-base leading-8 text-[#665f56]">
+                {artworkTitle
+                  ? `Εάν σας ενδιαφέρει το έργο «${artworkTitle}», μπορούμε να μιλήσουμε άμεσα για διαστάσεις, υλικά και χρόνο παράδοσης.`
+                  : "Για ειδικές παραγγελίες, συντήρηση ή εκτίμηση έργων, μπορείτε να επικοινωνήσετε απευθείας με το εργαστήριο."}
+              </p>
 
-              <a
-                href="tel:+302104297090"
-                className="flex items-center justify-center gap-3 w-full py-4 rounded-lg font-bold text-base tracking-wider text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
+              <div className="mt-8 grid gap-3">
+                <a href={SITE.phoneHref} className="primary-button w-full">
+                  <Phone size={16} />
+                  Κλήση στο εργαστήριο
+                </a>
+                <a
+                  href={`mailto:${SITE.email}?subject=${encodeURIComponent(emailSubject)}`}
+                  className="secondary-button w-full"
+                >
+                  <Mail size={16} />
+                  Στείλτε email
+                </a>
+                <a
+                  href={SITE.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="secondary-button w-full"
+                >
+                  <MapPin size={16} />
+                  Δείτε τον χάρτη
+                </a>
+              </div>
+
+              <div
+                className="mt-8 rounded-[1.5rem] border p-5"
                 style={{
-                  background: "linear-gradient(135deg, #8b0000, #6b0000)",
-                  boxShadow: "0 4px 15px rgba(139,0,0,0.3)",
+                  borderColor: "rgba(120,88,37,0.14)",
+                  background: "rgba(255,255,255,0.55)",
                 }}
               >
-                <Phone size={18} />
-                210 429 7090
-              </a>
-              
-              <p className="mt-6 text-xs" style={{ color: "#aaa" }}>
-                Δευτέρα - Παρασκευή: 09:00 - 17:00
-              </p>
+                <p className="text-[0.72rem] font-bold uppercase tracking-[0.24em] text-[#b68931]">
+                  Ώρες επικοινωνίας
+                </p>
+                <p className="mt-2 text-sm leading-7 text-[#524b43]">{SITE.hours}</p>
+                <p className="mt-1 text-sm leading-7 text-[#524b43]">{SITE.addressShort}</p>
+              </div>
             </div>
           </motion.div>
         </motion.div>

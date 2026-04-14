@@ -1,158 +1,189 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Phone, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE } from "@/data/site";
 
 const NAV_LINKS = [
   { href: "/", label: "Αρχική" },
   { href: "/shop", label: "Συλλογή" },
-  { href: "/about", label: "Ο Αγιογράφος" },
+  { href: "/about", label: "Ο αγιογράφος" },
   { href: "/contact", label: "Επικοινωνία" },
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
+    const handler = () => setScrolled(window.scrollY > 12);
+    handler();
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  const isActive = (href: string) => {
+    if (!pathname) {
+      return false;
+    }
+
+    if (href === "/") {
+      return pathname === "/" || pathname.endsWith("/gulielmos");
+    }
+
+    return pathname === href || pathname.endsWith(href);
+  };
+
   return (
     <>
       <motion.nav
-        initial={{ y: -80, opacity: 0 }}
+        initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 w-full z-50 transition-all duration-500"
-        style={{
-          background: scrolled ? "rgba(253,251,245,0.92)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(212,175,55,0.15)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.06)" : "none",
-        }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-8">
-          <div className="flex justify-between items-center h-20">
+        <div
+          className="mx-auto flex max-w-7xl items-center justify-between rounded-full border px-4 py-3 sm:px-5"
+          style={{
+            background: scrolled ? "rgba(255,250,242,0.92)" : "rgba(255,250,242,0.78)",
+            borderColor: scrolled ? "rgba(120,88,37,0.18)" : "rgba(120,88,37,0.12)",
+            boxShadow: scrolled
+              ? "0 18px 45px rgba(48,33,13,0.09)"
+              : "0 12px 28px rgba(48,33,13,0.05)",
+            backdropFilter: "blur(18px)",
+          }}
+        >
+          <Link href="/" className="min-w-0" onClick={() => setIsOpen(false)}>
+            <span className="block truncate font-serif text-2xl font-semibold tracking-[0.14em] text-[#1b1714] sm:text-[1.8rem]">
+              {SITE.name}
+            </span>
+            <span className="block truncate text-[0.62rem] uppercase tracking-[0.34em] text-[#b68931] sm:text-[0.68rem]">
+              {SITE.tagline}
+            </span>
+          </Link>
 
-            {/* Logo */}
-            <Link href="/" className="flex flex-col leading-none group">
-              <span className="text-xl font-serif font-bold tracking-[0.18em] transition-colors duration-300"
-                style={{ color: "#1a1a1a" }}>
-                {SITE.name}
-              </span>
-              <span className="text-[9px] tracking-[0.32em] uppercase mt-0.5"
-                style={{ color: "rgba(170,140,44,0.8)" }}>
-                {SITE.tagline}
-              </span>
-            </Link>
+          <div className="hidden items-center gap-2 md:flex">
+            {NAV_LINKS.map((link) => {
+              const active = isActive(link.href);
 
-            {/* Desktop Links */}
-            <div className="hidden md:flex items-center gap-8">
-              {NAV_LINKS.map((link) => (
+              return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative text-xs font-semibold tracking-[0.15em] uppercase transition-colors duration-300 group"
-                  style={{ color: "#444" }}
+                  className="rounded-full px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.18em]"
+                  style={{
+                    color: active ? "#8c1d18" : "#3c352e",
+                    background: active ? "rgba(182,137,49,0.1)" : "transparent",
+                  }}
                 >
-                  <span className="group-hover:text-[#8b0000] transition-colors duration-300">
-                    {link.label}
-                  </span>
-                  <span className="absolute -bottom-1 left-0 right-0 h-px scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
-                    style={{ background: "#d4af37" }} />
+                  {link.label}
                 </Link>
-              ))}
+              );
+            })}
+          </div>
 
-              <a href={SITE.phoneHref}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold tracking-widest transition-all duration-300 hover:scale-105"
-                style={{ background: "#8b0000", color: "#fff", boxShadow: "0 4px 15px rgba(139,0,0,0.3)" }}
-              >
-                <Phone size={16} />
-                {SITE.phone}
-              </a>
-            </div>
+          <div className="hidden items-center gap-3 md:flex">
+            <a href={SITE.phoneHref} className="primary-button !px-5 !py-3 !text-[0.72rem]">
+              <Phone size={16} />
+              {SITE.phone}
+            </a>
+          </div>
 
-            {/* Mobile Actions */}
-            <div className="flex md:hidden items-center gap-4">
-              <a href={SITE.phoneHref}
-                className="p-2 rounded-full transition-colors"
-                style={{ background: "rgba(139,0,0,0.1)", color: "#8b0000" }}
-                aria-label="Τηλέφωνο"
-              >
-                <Phone size={20} />
-              </a>
-
-            {/* Mobile Toggle */}
+          <div className="flex items-center gap-2 md:hidden">
+            <a
+              href={SITE.phoneHref}
+              className="flex h-11 w-11 items-center justify-center rounded-full border"
+              style={{
+                borderColor: "rgba(120,88,37,0.16)",
+                background: "rgba(255,250,242,0.72)",
+                color: "#8c1d18",
+              }}
+              aria-label="Τηλέφωνο"
+            >
+              <Phone size={18} />
+            </a>
             <button
-              className="p-2 transition-colors"
-              style={{ color: "#444" }}
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Μενού"
+              type="button"
+              className="flex h-11 w-11 items-center justify-center rounded-full border"
+              style={{
+                borderColor: "rgba(120,88,37,0.16)",
+                background: "rgba(255,250,242,0.72)",
+                color: "#3c352e",
+              }}
+              onClick={() => setIsOpen((value) => !value)}
+              aria-label={isOpen ? "Κλείσιμο μενού" : "Άνοιγμα μενού"}
             >
               <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={isOpen ? "x" : "menu"}
-                  initial={{ opacity: 0, rotate: -90 }}
+                <motion.span
+                  key={isOpen ? "close" : "menu"}
+                  initial={{ opacity: 0, rotate: -60 }}
                   animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.2 }}
+                  exit={{ opacity: 0, rotate: 60 }}
+                  transition={{ duration: 0.18 }}
+                  className="inline-flex"
                 >
-                  {isOpen ? <X size={22} /> : <Menu size={22} />}
-                </motion.div>
+                  {isOpen ? <X size={20} /> : <Menu size={20} />}
+                </motion.span>
               </AnimatePresence>
             </button>
-            </div>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center"
-            style={{ background: "rgba(253,251,245,0.98)", backdropFilter: "blur(20px)" }}
+            className="fixed inset-0 z-40 bg-[rgba(20,14,11,0.42)] px-6 pt-28 backdrop-blur-sm md:hidden"
           >
-            {/* Decorative gold line */}
-            <div className="absolute top-0 left-0 right-0 h-px"
-              style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.5), transparent)" }} />
-
-              <div className="flex flex-col items-center gap-10">
-                <a href={SITE.phoneHref}
-                  className="flex items-center gap-3 px-8 py-4 rounded-full text-xl font-bold tracking-widest transition-all duration-300 shadow-xl"
-                  style={{ background: "#8b0000", color: "#fff" }}
-                >
-                  <Phone size={24} />
-                  {SITE.phone}
-                </a>
-              {NAV_LINKS.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07 }}
-                >
+            <motion.div
+              initial={{ y: 24, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 24, opacity: 0 }}
+              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="mx-auto max-w-md rounded-[2rem] border bg-[#fff9f1] p-6 shadow-[0_24px_60px_rgba(20,14,11,0.18)]"
+              style={{ borderColor: "rgba(120,88,37,0.16)" }}
+            >
+              <div className="space-y-2">
+                {NAV_LINKS.map((link) => (
                   <Link
+                    key={link.href}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-3xl font-serif font-bold transition-colors duration-300 hover:text-[#8b0000]"
-                    style={{ color: "#1a1a1a" }}
+                    className="flex items-center justify-between rounded-2xl px-4 py-4 font-serif text-2xl text-[#1b1714]"
+                    style={{
+                      background: isActive(link.href) ? "rgba(182,137,49,0.09)" : "transparent",
+                    }}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
+                    <span className="text-sm uppercase tracking-[0.24em] text-[#b68931]">go</span>
                   </Link>
-                </motion.div>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              <div className="mt-6 grid gap-3">
+                <a href={SITE.phoneHref} className="primary-button w-full">
+                  <Phone size={16} />
+                  Κλήση στο εργαστήριο
+                </a>
+                <a href={`mailto:${SITE.email}`} className="secondary-button w-full">
+                  Email
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

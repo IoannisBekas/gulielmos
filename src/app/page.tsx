@@ -1,21 +1,49 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Star, Award, Palette, Phone } from "lucide-react";
-import { useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
+import { ProductCard } from "@/components/ProductCard";
 import { SITE } from "@/data/site";
 import { FEATURED_PRODUCTS, HERO_PRODUCT } from "@/data/products";
 
+const STUDIO_HIGHLIGHTS = [
+  {
+    title: "Παραδοσιακή τεχνική",
+    text: "Αυγοτέμπερα, φυσικές χρωστικές και φύλλο χρυσού 22Κ, με σεβασμό στη βυζαντινή παράδοση.",
+  },
+  {
+    title: "Έργα κατόπιν παραγγελίας",
+    text: "Κάθε αγιογραφία μπορεί να προσαρμοστεί σε θέμα, διάσταση και χώρο τοποθέτησης.",
+  },
+  {
+    title: "Συντήρηση και εκτίμηση",
+    text: "Το εργαστήριο αναλαμβάνει επιλεγμένες συντηρήσεις και εκτιμήσεις εικόνων και έργων τέχνης.",
+  },
+] as const;
+
+const COMMISSION_STEPS = [
+  {
+    value: "01",
+    title: "Συζήτηση και κατεύθυνση",
+    text: "Ορίζουμε το θέμα, τις διαστάσεις και την αισθητική παρουσία του έργου.",
+  },
+  {
+    value: "02",
+    title: "Υλικά και τεχνική",
+    text: "Επιλογή ξύλινου πάνελ, αυγοτέμπερας και φύλλου χρυσού σύμφωνα με το ζητούμενο αποτέλεσμα.",
+  },
+  {
+    value: "03",
+    title: "Παράδοση στο εργαστήριο",
+    text: "Παραλαβή από τον Πειραιά ή συνεννόηση για αποστολή, με καθοδήγηση για την τοποθέτηση.",
+  },
+] as const;
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalItem, setModalItem] = useState<string | undefined>();
 
@@ -25,313 +53,212 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "#fdfbf5", color: "#1a1a1a" }}>
+    <div className="overflow-x-hidden pb-24">
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} artworkTitle={modalItem} />
 
-      {/* ═══════════════ HERO ═══════════════ */}
-      <section ref={heroRef} className="relative flex items-center justify-center overflow-x-hidden" style={{ minHeight: "100svh" }}>
+      <section className="page-shell page-hero">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="section-eyebrow">Ατελιέ βυζαντινής αγιογραφίας</span>
+            <h1 className="section-title mt-7 text-6xl text-[#171310] sm:text-7xl xl:text-[5.5rem]">
+              Χειροποίητες
+              <span className="block text-[#8c1d18]">βυζαντινές αγιογραφίες</span>
+            </h1>
+            <p className="section-description mt-8">
+              {SITE.description} Κάθε έργο δημιουργείται στο εργαστήριο του Πειραιά,
+              με ήρεμη προσέγγιση, αυθεντικά υλικά και ακριβή φροντίδα στην εικόνα,
+              το χρυσό και τη συνολική παρουσία του έργου.
+            </p>
 
-        {/* Subtle warm background orbs */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%)" }} />
-          <div className="absolute bottom-[-10%] left-[-5%] w-[40vw] h-[40vw] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(139,0,0,0.06) 0%, transparent 70%)" }} />
-        </div>
-
-        {/* Top decorative rule */}
-        <div className="absolute top-20 left-0 right-0 h-px"
-          style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.3), transparent)" }} />
-
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-16">
-          <div className="flex flex-col lg:flex-row gap-12 xl:gap-20 items-center py-32">
-
-            {/* Left: Text */}
-            <div className="text-center lg:text-left flex-1">
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="mb-7"
-              >
-                <span className="inline-block px-4 py-2 rounded-full text-xs font-bold tracking-[0.28em] uppercase"
-                  style={{
-                    background: "rgba(212,175,55,0.1)",
-                    border: "1px solid rgba(212,175,55,0.4)",
-                    color: "#aa8c2c",
-                  }}>
-                  ✦ Χειροποίητα Έργα Τέχνης ✦
-                </span>
-              </motion.div>
-
-              {/* Title — fixed clipping by using leading-normal and py-2 on spans */}
-              <motion.h1
-                initial={{ opacity: 0, y: 36 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="font-serif font-bold leading-normal mb-4"
-                style={{ wordBreak: "break-word", hyphens: "auto" }}
-              >
-                <span className="block text-5xl sm:text-6xl lg:text-[4rem] xl:text-[5rem] py-2" style={{ color: "#111" }}>
-                  Βυζαντινή
-                </span>
-                <span
-                  className="block text-5xl sm:text-6xl lg:text-[4rem] xl:text-[5rem] py-2 -mt-4 sm:-mt-6"
-                  style={{
-                    background: "linear-gradient(135deg, #8b0000 0%, #c0392b 40%, #8b0000 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  Αγιογραφία
-                </span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="text-base sm:text-lg leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0"
-                style={{ color: "#555" }}
-              >
-                Ανακαλύψτε μοναδικά ιερά έργα τέχνης, φτιαγμένα με αυγοτέμπερα και φύλλα χρυσού 22 καρατίων, διατηρώντας αναλλοίωτη την ιερή βυζαντινή παράδοση.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-              >
-                <Link href="/shop"
-                  className="group inline-flex items-center justify-center gap-2 px-7 py-4 text-sm font-bold tracking-widest uppercase rounded-full text-white transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: "linear-gradient(135deg, #8b0000, #6b0000)",
-                    boxShadow: "0 4px 20px rgba(139,0,0,0.3)",
-                  }}>
-                  Περιήγηση Συλλογής
-                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-300" />
-                </Link>
-
-                <Link href="/about"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 text-sm font-semibold tracking-widest uppercase rounded-full transition-all duration-300 hover:bg-[#d4af37]/10"
-                  style={{ border: "1px solid rgba(212,175,55,0.5)", color: "#aa8c2c" }}>
-                  Η Τέχνη Μας
-                </Link>
-
-              </motion.div>
-
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.9, delay: 0.65 }}
-                className="mt-12 flex items-center gap-10 justify-center lg:justify-start"
-              >
-                {SITE.stats.map(({ value, label }) => (
-                  <div key={label} className="text-center">
-                    <div className="text-2xl font-serif font-bold" style={{ color: "#8b0000" }}>{value}</div>
-                    <div className="text-[10px] uppercase tracking-widest mt-1" style={{ color: "#999" }}>{label}</div>
-                  </div>
-                ))}
-              </motion.div>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <Link href="/shop" className="primary-button">
+                Δείτε τη συλλογή
+                <ArrowRight size={16} />
+              </Link>
+              <button type="button" onClick={() => openContact()} className="secondary-button">
+                Συζητήστε μια παραγγελία
+              </button>
             </div>
 
-            {/* Right: Featured icon image */}
-            <motion.div
-              initial={{ opacity: 0, x: 50, scale: 0.96 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex justify-center items-center flex-1 w-full"
-            >
-              {/* Warm glow behind */}
-              <div className="absolute inset-0 rounded-3xl blur-3xl opacity-25"
-                style={{ background: "radial-gradient(circle at center, #d4af37 0%, transparent 65%)" }} />
-
-              <div className="relative group cursor-pointer" style={{ perspective: "1000px" }}>
-                <motion.div
-                  whileHover={{ rotateY: -4, rotateX: 3, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 180, damping: 22 }}
-                  className="relative rounded-2xl overflow-hidden"
-                  style={{
-                    boxShadow: "0 0 0 1px rgba(212,175,55,0.35), 0 25px 70px rgba(0,0,0,0.18), 0 0 50px rgba(212,175,55,0.08)",
-                  }}
-                >
-                  <Image
-                    src={HERO_PRODUCT.image}
-                    alt={HERO_PRODUCT.title}
-                    width={500}
-                    height={620}
-                    className="w-full max-w-xs sm:max-w-sm lg:max-w-md object-cover"
-                    priority
-                  />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: "linear-gradient(135deg, rgba(212,175,55,0.08) 0%, transparent 60%)" }} />
-                </motion.div>
-
-                {/* Price badge */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.7, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.5 }}
-                  className="absolute -bottom-4 -right-4 px-5 py-3 rounded-2xl text-sm font-bold"
-                  style={{
-                    background: "#fff",
-                    border: "1px solid rgba(212,175,55,0.4)",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  <span className="text-[10px] tracking-wider block mb-0.5" style={{ color: "#999" }}>από</span>
-                  <span style={{ color: "#8b0000" }}>{HERO_PRODUCT.price.replace('από ', '')}</span>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: "#bbb" }}>Scroll</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-px h-10"
-            style={{ background: "linear-gradient(to bottom, rgba(212,175,55,0.5), transparent)" }}
-          />
-        </motion.div>
-      </section>
-
-      {/* ═══════════════ DIVIDER ═══════════════ */}
-      <div className="relative py-2">
-        <div className="h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl" style={{ color: "rgba(212,175,55,0.5)" }}>✦</div>
-      </div>
-
-      {/* ═══════════════ FEATURED GALLERY ═══════════════ */}
-      <section className="relative py-28 px-4 sm:px-8" style={{ background: "#fdfbf5" }}>
-        <div className="max-w-7xl mx-auto">
-
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase mb-4" style={{ color: "#aa8c2c" }}>Επιλεγμένα Έργα</p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold" style={{ color: "#1a1a1a" }}>Η Συλλογή μας</h2>
-            <div className="mt-5 w-16 h-px mx-auto" style={{ background: "linear-gradient(to right, transparent, #d4af37, transparent)" }} />
+            <div className="mt-12 grid gap-3 sm:grid-cols-3">
+              {SITE.stats.map((item) => (
+                <div key={item.label} className="surface-card rounded-[1.6rem] px-5 py-5">
+                  <p className="font-serif text-3xl font-semibold text-[#8c1d18]">{item.value}</p>
+                  <p className="mt-2 text-[0.72rem] uppercase tracking-[0.24em] text-[#7d705f]">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {FEATURED_PRODUCTS.map((art, i) => (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative"
+          >
+            <div
+              className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] border"
+              style={{ borderColor: "rgba(182,137,49,0.18)" }}
+            />
+            <div className="surface-card-strong relative overflow-hidden rounded-[2rem] p-3">
+              <div className="relative overflow-hidden rounded-[1.5rem]">
+                <Image
+                  src={HERO_PRODUCT.image}
+                  alt={HERO_PRODUCT.title}
+                  width={900}
+                  height={1100}
+                  preload
+                  className="h-auto w-full"
+                />
+              </div>
+              <div className="flex flex-col gap-4 px-3 pb-3 pt-5 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-[0.7rem] uppercase tracking-[0.3em] text-[#b68931]">
+                    {HERO_PRODUCT.tag}
+                  </p>
+                  <h2 className="mt-2 font-serif text-3xl font-semibold text-[#171310]">
+                    {HERO_PRODUCT.title}
+                  </h2>
+                  <p className="mt-2 text-sm leading-7 text-[#665f56]">
+                    {HERO_PRODUCT.subtitle} · {HERO_PRODUCT.dimensions}
+                  </p>
+                </div>
+                <span className="detail-pill">{HERO_PRODUCT.price}</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="page-shell">
+        <div className="grid gap-4 lg:grid-cols-3">
+          {STUDIO_HIGHLIGHTS.map((item, index) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className="surface-card rounded-[1.75rem] p-6"
+            >
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.28em] text-[#b68931]">
+                0{index + 1}
+              </p>
+              <h3 className="mt-4 font-serif text-3xl font-semibold text-[#171310]">
+                {item.title}
+              </h3>
+              <p className="mt-4 text-sm leading-7 text-[#665f56]">{item.text}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-24 py-24" style={{ background: "rgba(237,227,210,0.58)" }}>
+        <div className="page-shell">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="mb-12 max-w-3xl"
+          >
+            <span className="section-eyebrow">Επιλεγμένα έργα</span>
+            <h2 className="section-title mt-6 text-5xl text-[#171310] sm:text-6xl">
+              Η συλλογή
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-[#665f56]">
+              Επιλεγμένες αγιογραφίες από το εργαστήριο, παρουσιασμένες με καθαρότερη
+              δομή και περισσότερη έμφαση στο ίδιο το έργο.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-6 xl:grid-cols-3">
+            {FEATURED_PRODUCTS.map((product, index) => (
               <motion.div
-                key={art.title}
-                initial={{ opacity: 0, y: 40 }}
+                key={product.title}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
               >
-                <div onClick={() => openContact(art.title)} className="group block relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-500 w-full text-left">
-                  <Image
-                    src={art.image}
-                    alt={art.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
-
-                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.5)" }} />
-
-                  <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase"
-                    style={{
-                      background: "rgba(212,175,55,0.15)",
-                      border: "1px solid rgba(212,175,55,0.5)",
-                      color: "#d4af37",
-                      backdropFilter: "blur(8px)",
-                    }}>
-                    {art.tag}
-                  </div>
-
-                  <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                    <h3 className="font-serif text-lg font-bold text-white mb-1">{art.title}</h3>
-                    <p className="text-xs text-white/60 mb-3">{art.subtitle}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-sm" style={{ color: "#d4af37" }}>{art.price}</span>
-                      <span className="flex items-center gap-1.5 text-xs font-semibold text-white/70 group-hover:text-white transition-colors">
-                        Ενδιαφέρον <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <ProductCard
+                  product={product}
+                  onInquiry={openContact}
+                  preload={index === 0}
+                />
               </motion.div>
             ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="mt-14 text-center"
-          >
-            <Link href="/shop"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105"
-              style={{
-                border: "1px solid rgba(139,0,0,0.35)",
-                color: "#8b0000",
-                background: "rgba(139,0,0,0.04)",
-              }}>
-              Δείτε Όλα τα Έργα <ArrowRight size={16} />
+          <div className="mt-10">
+            <Link href="/shop" className="secondary-button">
+              Όλη η συλλογή
+              <ArrowRight size={16} />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-
-      {/* ═══════════════ CTA ═══════════════ */}
-      <section className="relative py-28 px-4 sm:px-8 overflow-hidden"
-        style={{ background: "linear-gradient(150deg, #0b1d3a 0%, #1a0505 100%)" }}>
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")", backgroundSize: "200px 200px" }} />
-        <motion.div
-          initial={{ opacity: 0, y: 36 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 max-w-2xl mx-auto text-center"
-        >
-          <p className="text-xs font-bold tracking-[0.4em] uppercase mb-6" style={{ color: "#d4af37" }}>✦ Ειδικές Παραγγελίες ✦</p>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
-            Θέλετε μια μοναδική{" "}
-            <span style={{
-              background: "linear-gradient(135deg, #d4af37, #f5e17a)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>παραγγελία;</span>
+      <section className="page-shell mt-24 grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
+        <div className="surface-card rounded-[2rem] p-8 sm:p-10">
+          <span className="section-eyebrow">Ειδικές παραγγελίες</span>
+          <h2 className="section-title mt-6 text-5xl text-[#171310] sm:text-6xl">
+            Μια ήσυχη και
+            <span className="block text-[#8c1d18]">προσεκτική διαδικασία</span>
           </h2>
-          <p className="text-lg leading-relaxed mb-10" style={{ color: "rgba(255,255,255,0.55)" }}>
-            Δημιουργούμε αγιογραφίες κατά παραγγελία για οικογένειες, ναούς και ιδρύματα σε οποιοδήποτε μέγεθος επιθυμείτε.
+          <p className="mt-6 max-w-2xl text-base leading-8 text-[#665f56]">
+            Για οικογένειες, ναούς και ιδρύματα, το εργαστήριο αναλαμβάνει έργα
+            κατόπιν παραγγελίας με σαφή συζήτηση για το θέμα, το μέγεθος και τα
+            υλικά που ταιριάζουν σε κάθε χώρο.
           </p>
-          <button onClick={() => openContact()}
-            className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-bold tracking-widest uppercase text-sm text-white transition-all duration-300 hover:scale-105"
-            style={{
-              background: "linear-gradient(135deg, #8b0000, #6b0000)",
-              boxShadow: "0 0 40px rgba(139,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)",
-            }}>
-            Επικοινωνήστε μαζί μας <ArrowRight size={16} />
-          </button>
-        </motion.div>
-      </section>
 
+          <div className="mt-8 space-y-5">
+            {COMMISSION_STEPS.map((step) => (
+              <div
+                key={step.value}
+                className="flex gap-4 rounded-[1.5rem] border p-5"
+                style={{ borderColor: "rgba(120,88,37,0.12)", background: "rgba(255,255,255,0.55)" }}
+              >
+                <div className="font-serif text-3xl text-[#b68931]">{step.value}</div>
+                <div>
+                  <h3 className="font-serif text-2xl font-semibold text-[#171310]">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-[#665f56]">{step.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-[2rem] bg-[#171310] px-8 py-10 text-[#f7efe2] shadow-[0_22px_60px_rgba(20,14,11,0.16)] sm:px-10">
+          <p className="text-[0.72rem] font-bold uppercase tracking-[0.3em] text-[#d8b05b]">
+            Εργαστήριο Πειραιά
+          </p>
+          <h2 className="section-title mt-5 text-5xl text-white sm:text-6xl">
+            Θέλετε ένα έργο
+            <span className="block text-[#d8b05b]">για τον δικό σας χώρο;</span>
+          </h2>
+          <p className="mt-6 text-base leading-8 text-white/68">
+            Επικοινωνήστε για να συζητήσουμε μια ειδική παραγγελία, συντήρηση ή
+            εκτίμηση έργου. Η πρώτη επικοινωνία γίνεται απλά και χωρίς περιττό
+            θόρυβο.
+          </p>
+
+          <div className="mt-8 grid gap-3">
+            <button type="button" onClick={() => openContact()} className="primary-button w-full">
+              Επικοινωνήστε μαζί μας
+            </button>
+            <a href={SITE.phoneHref} className="secondary-button w-full !border-white/20 !bg-white/8 !text-white">
+              {SITE.phone}
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

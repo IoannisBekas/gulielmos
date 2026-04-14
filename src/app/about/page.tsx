@@ -3,433 +3,336 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, Church, Palette, Sparkles, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, Church, Clock, MapPin, Palette, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { ContactModal } from "@/components/ContactModal";
+import { BIO_PARAGRAPHS, MATERIALS, MILESTONES, PHILOSOPHY, SERVICES } from "@/data/about";
 import { SITE } from "@/data/site";
-import { BIO_PARAGRAPHS, MILESTONES, SERVICES, PHILOSOPHY, MATERIALS } from "@/data/about";
 
-import workshopImg from "../../../public/workshop.png";
 import pantocratorImg from "../../../public/pantocrator.png";
+import workshopImg from "../../../public/workshop.png";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 32 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  viewport: { once: true, margin: "-50px" },
+  transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
 };
 
 const ICON_MAP = { Church, Palette, Sparkles, BookOpen } as const;
+
+const STUDIO_FACTS = [
+  {
+    icon: Clock,
+    label: "Επαγγελματική πορεία",
+    value: `Από το ${SITE.workshopSince}`,
+  },
+  {
+    icon: MapPin,
+    label: "Εργαστήριο",
+    value: SITE.addressShort,
+  },
+] as const;
 
 export default function AboutPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen" style={{ background: "#fdfbf5", color: "#1a1a1a" }}>
+    <div className="pb-24">
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* ═══════════════ HERO ═══════════════ */}
-      <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-x-hidden">
-        {/* Background orbs */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-5%] left-[-10%] w-[45vw] h-[45vw] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%)" }} />
-          <div className="absolute bottom-[-15%] right-[-5%] w-[50vw] h-[50vw] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(139,0,0,0.05) 0%, transparent 70%)" }} />
-        </div>
-
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 text-center">
+      <section className="page-shell page-hero">
+        <div className="grid gap-10 lg:grid-cols-[1.02fr_.98fr] lg:items-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.55 }}
           >
-            <span className="inline-block px-4 py-2 rounded-full text-xs font-bold tracking-[0.28em] uppercase mb-8"
-              style={{
-                background: "rgba(212,175,55,0.1)",
-                border: "1px solid rgba(212,175,55,0.4)",
-                color: "#aa8c2c",
-              }}>
-              ✦ Ο Αγιογράφος ✦
-            </span>
-          </motion.div>
+            <span className="section-eyebrow">Ο αγιογράφος</span>
+            <h1 className="section-title mt-6 text-6xl text-[#171310] sm:text-7xl">
+              Η πορεία και η
+              <span className="block text-[#8c1d18]">φιλοσοφία του εργαστηρίου</span>
+            </h1>
+            <p className="section-description mt-7 max-w-2xl">
+              Ο Ζώρζος Γουλιέλμος εργάζεται στον Πειραιά από το 1987, με σταθερή προσήλωση στην
+              παραδοσιακή βυζαντινή αγιογραφία, στα αυθεντικά υλικά και στη φροντίδα κάθε έργου ως
+              προσωπική παραγγελία.
+            </p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif font-bold leading-normal mb-4"
-          >
-            <span className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl py-2" style={{ color: "#111" }}>
-              Ζώρζος
-            </span>
-            <span
-              className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl py-2 -mt-4 sm:-mt-6"
-              style={{
-                background: "linear-gradient(135deg, #8b0000 0%, #c0392b 40%, #8b0000 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Γουλιέλμος
-            </span>
-          </motion.h1>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <button type="button" onClick={() => setIsModalOpen(true)} className="primary-button">
+                Συζητήστε με το εργαστήριο
+                <ArrowRight size={16} />
+              </button>
+              <Link href="/shop" className="secondary-button">
+                Δείτε επιλεγμένα έργα
+              </Link>
+            </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto"
-            style={{ color: "#666" }}
-          >
-            Αγιογράφος · Συντηρητής · Εκτιμητής Βυζαντινής Τέχνης
-          </motion.p>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-8 w-24 h-px mx-auto"
-            style={{ background: "linear-gradient(to right, transparent, #d4af37, transparent)" }}
-          />
-        </div>
-      </section>
-
-      {/* ═══════════════ DIVIDER ═══════════════ */}
-      <div className="relative py-2">
-        <div className="h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl" style={{ color: "rgba(212,175,55,0.5)" }}>✦</div>
-      </div>
-
-      {/* ═══════════════ BIO SECTION ═══════════════ */}
-      <section className="py-20 sm:py-28 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-center">
-
-            {/* Image */}
-            <motion.div {...fadeUp} className="relative">
-              <div className="absolute -inset-4 rounded-3xl blur-2xl opacity-20 pointer-events-none"
-                style={{ background: "radial-gradient(circle at center, #d4af37 0%, transparent 70%)" }} />
-              <div className="relative rounded-2xl overflow-hidden"
-                style={{
-                  boxShadow: "0 0 0 1px rgba(212,175,55,0.3), 0 25px 60px rgba(0,0,0,0.15), 0 0 40px rgba(212,175,55,0.06)",
-                }}>
-                <Image
-                  src={workshopImg}
-                  alt="Εργαστήριο αγιογραφίας Ζώρζου Γουλιέλμου στον Πειραιά"
-                  width={700}
-                  height={500}
-                  className="w-full object-cover aspect-[4/3]"
-                  priority
-                />
-                <div className="absolute inset-0 pointer-events-none"
-                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 40%)" }} />
-              </div>
-
-              {/* Floating badge */}
-              <div className="absolute -bottom-5 -right-3 sm:-right-5 px-5 py-3 rounded-2xl"
-                style={{
-                  background: "#fff",
-                  border: "1px solid rgba(212,175,55,0.4)",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-                }}>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center"
-                    style={{ background: "rgba(212,175,55,0.12)" }}>
-                    <Clock size={18} style={{ color: "#aa8c2c" }} />
-                  </div>
-                  <div>
-                    <div className="text-lg font-serif font-bold" style={{ color: "#8b0000" }}>35+</div>
-                    <div className="text-[10px] tracking-wider uppercase" style={{ color: "#999" }}>Χρόνια Εμπειρίας</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Text */}
-            <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.15 }}>
-              <p className="text-xs font-bold tracking-[0.4em] uppercase mb-4" style={{ color: "#aa8c2c" }}>
-                Η Ιστορία μας
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold mb-8 leading-snug" style={{ color: "#1a1a1a" }}>
-                Μια ζωή αφιερωμένη στην{" "}
-                <span style={{ color: "#8b0000" }}>ιερή τέχνη</span>
-              </h2>
-
-              <div className="space-y-5 text-base leading-relaxed" style={{ color: "#555" }}>
-                {BIO_PARAGRAPHS.map((html, i) => (
-                  <p key={i} dangerouslySetInnerHTML={{ __html: html }} />
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-4">
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="inline-flex items-center gap-2 px-7 py-4 text-sm font-bold tracking-widest uppercase rounded-full text-white transition-all duration-300 hover:scale-105"
-                  style={{
-                    background: "linear-gradient(135deg, #8b0000, #6b0000)",
-                    boxShadow: "0 4px 20px rgba(139,0,0,0.3)",
-                  }}>
-                  Επικοινωνία <ArrowRight size={15} />
-                </button>
-                <Link href="/shop"
-                  className="inline-flex items-center gap-2 px-7 py-4 text-sm font-semibold tracking-widest uppercase rounded-full transition-all duration-300 hover:bg-[#d4af37]/10"
-                  style={{ border: "1px solid rgba(212,175,55,0.5)", color: "#aa8c2c" }}>
-                  Δείτε τα Έργα
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ DIVIDER ═══════════════ */}
-      <div className="relative py-2">
-        <div className="h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl" style={{ color: "rgba(212,175,55,0.5)" }}>✦</div>
-      </div>
-
-      {/* ═══════════════ TIMELINE ═══════════════ */}
-      <section className="py-20 sm:py-28 px-4 sm:px-8" style={{ background: "rgba(0,0,0,0.02)" }}>
-        <div className="max-w-4xl mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-16">
-            <p className="text-xs font-bold tracking-[0.4em] uppercase mb-4" style={{ color: "#aa8c2c" }}>Χρονολόγιο</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold" style={{ color: "#1a1a1a" }}>
-              Σταθμοί πορείας
-            </h2>
-            <div className="mt-5 w-16 h-px mx-auto" style={{ background: "linear-gradient(to right, transparent, #d4af37, transparent)" }} />
-          </motion.div>
-
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-6 sm:left-1/2 top-0 bottom-0 w-px sm:-translate-x-px"
-              style={{ background: "linear-gradient(to bottom, transparent, rgba(212,175,55,0.4), transparent)" }} />
-
-            {MILESTONES.map((m, i) => (
-              <motion.div
-                key={m.year}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
-                className={`relative flex items-start gap-6 sm:gap-0 mb-12 last:mb-0 ${
-                  i % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
-                }`}
-              >
-                {/* Dot */}
-                <div className="absolute left-6 sm:left-1/2 w-3 h-3 rounded-full -translate-x-1/2 mt-1.5 z-10"
-                  style={{
-                    background: "#d4af37",
-                    boxShadow: "0 0 0 4px rgba(212,175,55,0.15), 0 0 12px rgba(212,175,55,0.2)",
-                  }} />
-
-                {/* Content */}
-                <div className={`pl-14 sm:pl-0 sm:w-1/2 ${
-                  i % 2 === 0 ? "sm:pr-12 sm:text-right" : "sm:pl-12 sm:text-left"
-                }`}>
-                  <span className="inline-block text-sm font-serif font-bold px-3 py-1 rounded-full mb-2"
-                    style={{
-                      background: "rgba(139,0,0,0.08)",
-                      color: "#8b0000",
-                    }}>
-                    {m.year}
-                  </span>
-                  <p className="text-sm sm:text-base leading-relaxed" style={{ color: "#555" }}>
-                    {m.text}
+            <div className="mt-12 grid gap-3 sm:grid-cols-3">
+              {SITE.stats.map((item) => (
+                <div key={item.label} className="surface-card rounded-[1.6rem] px-5 py-5">
+                  <p className="font-serif text-3xl font-semibold text-[#8c1d18]">{item.value}</p>
+                  <p className="mt-2 text-[0.72rem] uppercase tracking-[0.24em] text-[#7d705f]">
+                    {item.label}
                   </p>
                 </div>
-
-                {/* Spacer for opposite side */}
-                <div className="hidden sm:block sm:w-1/2" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ DIVIDER ═══════════════ */}
-      <div className="relative py-2">
-        <div className="h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl" style={{ color: "rgba(212,175,55,0.5)" }}>✦</div>
-      </div>
-
-      {/* ═══════════════ SERVICES ═══════════════ */}
-      <section className="py-20 sm:py-28 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-16">
-            <p className="text-xs font-bold tracking-[0.4em] uppercase mb-4" style={{ color: "#aa8c2c" }}>Υπηρεσίες</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold" style={{ color: "#1a1a1a" }}>
-              Τι προσφέρουμε
-            </h2>
-            <div className="mt-5 w-16 h-px mx-auto" style={{ background: "linear-gradient(to right, transparent, #d4af37, transparent)" }} />
+              ))}
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {SERVICES.map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 36 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="group relative rounded-2xl p-7 text-center transition-all duration-500 hover:-translate-y-1"
-                style={{
-                  background: "#fff",
-                  border: "1px solid rgba(212,175,55,0.15)",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
-                }}
-              >
-                <div className="w-14 h-14 rounded-xl mx-auto mb-5 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                  style={{ background: "rgba(212,175,55,0.08)" }}>
-                  {(() => { const Icon = ICON_MAP[s.iconName]; return <Icon size={24} style={{ color: "#aa8c2c" }} />; })()}
-                </div>
-                <h3 className="font-serif font-bold text-lg mb-3" style={{ color: "#1a1a1a" }}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#777" }}>{s.desc}</p>
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.08 }}
+            className="space-y-5"
+          >
+            <div className="surface-card-strong overflow-hidden rounded-[2rem] p-3">
+              <div className="relative overflow-hidden rounded-[1.6rem]">
+                <Image
+                  src={workshopImg}
+                  alt="Εργαστήριο βυζαντινής αγιογραφίας στον Πειραιά"
+                  width={1200}
+                  height={900}
+                  preload
+                  className="h-auto w-full"
+                />
+              </div>
+              <div className="grid gap-3 px-3 pb-3 pt-5 sm:grid-cols-2">
+                {STUDIO_FACTS.map((item) => (
+                  <div
+                    key={item.label}
+                    className="rounded-[1.4rem] border px-4 py-4"
+                    style={{
+                      borderColor: "rgba(120,88,37,0.12)",
+                      background: "rgba(255,255,255,0.62)",
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-[#b68931]">
+                        <item.icon size={18} />
+                      </div>
+                      <div>
+                        <p className="text-[0.66rem] font-bold uppercase tracking-[0.26em] text-[#b68931]">
+                          {item.label}
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-[#3c352e]">{item.value}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-                {/* Hover gold border */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.4)" }} />
-              </motion.div>
-            ))}
-          </div>
+            <div className="overflow-hidden rounded-[2rem] bg-[#171310] px-8 py-8 text-[#f7efe2] shadow-[0_22px_60px_rgba(20,14,11,0.16)]">
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.3em] text-[#d8b05b]">
+                Φιλοσοφία
+              </p>
+              <blockquote className="mt-5 font-serif text-3xl leading-tight text-white sm:text-[2.5rem]">
+                “{PHILOSOPHY.quote}”
+              </blockquote>
+              <p className="mt-5 text-sm uppercase tracking-[0.28em] text-white/62">
+                {PHILOSOPHY.author}
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ═══════════════ PHILOSOPHY ═══════════════ */}
-      <section className="relative py-28 px-4 sm:px-8 overflow-hidden"
-        style={{ background: "linear-gradient(150deg, #0b1d3a 0%, #1a0505 100%)" }}>
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")", backgroundSize: "200px 200px" }} />
+      <section className="page-shell">
+        <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
+          <motion.div {...fadeUp} className="surface-card rounded-[2rem] p-8 sm:p-10">
+            <span className="section-eyebrow">Βιογραφία</span>
+            <h2 className="section-title mt-6 text-5xl text-[#171310] sm:text-6xl">
+              Μια ζωή αφιερωμένη
+              <span className="block text-[#8c1d18]">στην ιερή τέχνη</span>
+            </h2>
+            <div className="mt-7 space-y-5 text-base leading-8 text-[#665f56]">
+              {BIO_PARAGRAPHS.map((paragraph, index) => (
+                <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
+              ))}
+            </div>
+          </motion.div>
 
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-
-            {/* Quote text */}
-            <motion.div {...fadeUp} className="lg:col-span-3">
-              <p className="text-xs font-bold tracking-[0.4em] uppercase mb-6" style={{ color: "#d4af37" }}>
-                ✦ Φιλοσοφία ✦
-              </p>
-              <blockquote className="text-2xl sm:text-3xl font-serif leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.9)" }}>
-                &ldquo;{PHILOSOPHY.quote}&rdquo;
-              </blockquote>
-              <p className="text-sm font-semibold tracking-widest" style={{ color: "rgba(212,175,55,0.7)" }}>
-                — {PHILOSOPHY.author}
-              </p>
-            </motion.div>
-
-            {/* Featured small image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-2 flex justify-center"
-            >
-              <div className="relative rounded-2xl overflow-hidden"
-                style={{
-                  boxShadow: "0 0 0 1px rgba(212,175,55,0.3), 0 20px 50px rgba(0,0,0,0.4)",
-                }}>
+          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.08 }} className="space-y-6">
+            <div className="surface-card overflow-hidden rounded-[2rem] p-3">
+              <div className="relative overflow-hidden rounded-[1.6rem]">
                 <Image
                   src={pantocratorImg}
-                  alt="Παντοκράτωρ — Έργο του Ζώρζου Γουλιέλμου"
-                  width={320}
-                  height={400}
-                  className="w-48 sm:w-64 object-cover"
+                  alt="Λεπτομέρεια βυζαντινής αγιογραφίας"
+                  width={900}
+                  height={1200}
+                  className="h-auto w-full"
                 />
-                <div className="absolute inset-0 pointer-events-none"
-                  style={{ background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 50%)" }} />
               </div>
-            </motion.div>
-          </div>
+              <div className="px-4 pb-4 pt-5">
+                <p className="text-[0.68rem] font-bold uppercase tracking-[0.26em] text-[#b68931]">
+                  Προσέγγιση
+                </p>
+                <p className="mt-3 text-sm leading-7 text-[#665f56]">
+                  Κάθε έργο σχεδιάζεται με έμφαση στη σωστή κλίμακα, στη χρωματική ισορροπία και
+                  στην ήρεμη παρουσία που πρέπει να έχει μέσα στον χώρο όπου θα τοποθετηθεί.
+                </p>
+              </div>
+            </div>
+
+            <div className="surface-card rounded-[2rem] p-7">
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-[#b68931]">
+                Το εργαστήριο σήμερα
+              </p>
+              <p className="mt-4 text-sm leading-8 text-[#665f56]">
+                Το ατελιέ παραμένει χώρος προσωπικής εργασίας και άμεσης επικοινωνίας με όσους
+                αναζητούν ένα έργο για οικία, ναό ή ίδρυμα, καθώς και για συντήρηση ή εκτίμηση
+                εικόνων.
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <a href={SITE.phoneHref} className="secondary-button">
+                  {SITE.phone}
+                </a>
+                <a
+                  href={SITE.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="secondary-button"
+                >
+                  <MapPin size={16} />
+                  Δείτε τη διεύθυνση
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ═══════════════ TRADITION ═══════════════ */}
-      <section className="py-20 sm:py-28 px-4 sm:px-8">
-        <div className="max-w-5xl mx-auto">
-          <motion.div {...fadeUp} className="text-center mb-14">
-            <p className="text-xs font-bold tracking-[0.4em] uppercase mb-4" style={{ color: "#aa8c2c" }}>
-              Η Τεχνική
-            </p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold" style={{ color: "#1a1a1a" }}>
-              Αυθεντικά υλικά, αιώνια τέχνη
+      <section className="mt-24 py-24" style={{ background: "rgba(237,227,210,0.58)" }}>
+        <div className="page-shell grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
+          <motion.div {...fadeUp} className="surface-card rounded-[2rem] p-8 sm:p-10">
+            <span className="section-eyebrow">Χρονολόγιο</span>
+            <h2 className="section-title mt-6 text-5xl text-[#171310] sm:text-6xl">
+              Σταθμοί
+              <span className="block text-[#8c1d18]">της πορείας</span>
             </h2>
-            <div className="mt-5 w-16 h-px mx-auto" style={{ background: "linear-gradient(to right, transparent, #d4af37, transparent)" }} />
+
+            <div className="mt-8 space-y-4">
+              {MILESTONES.map((milestone) => (
+                <div
+                  key={milestone.year}
+                  className="rounded-[1.5rem] border px-5 py-5"
+                  style={{
+                    borderColor: "rgba(120,88,37,0.12)",
+                    background: "rgba(255,255,255,0.68)",
+                  }}
+                >
+                  <p className="text-[0.72rem] font-bold uppercase tracking-[0.28em] text-[#b68931]">
+                    {milestone.year}
+                  </p>
+                  <p className="mt-3 text-sm leading-7 text-[#665f56]">{milestone.text}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {MATERIALS.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="text-center p-8 rounded-2xl"
-                style={{
-                  background: "rgba(212,175,55,0.03)",
-                  border: "1px solid rgba(212,175,55,0.12)",
-                }}
-              >
-                <div className="text-4xl mb-5">{item.icon}</div>
-                <h3 className="font-serif font-bold text-lg mb-3" style={{ color: "#1a1a1a" }}>{item.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#777" }}>{item.text}</p>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.08 }} className="space-y-6">
+            <div className="surface-card rounded-[2rem] p-8">
+              <span className="section-eyebrow">Υλικά και τεχνική</span>
+              <h2 className="section-title mt-6 text-4xl text-[#171310] sm:text-5xl">
+                Η ουσία βρίσκεται
+                <span className="block text-[#8c1d18]">στα υλικά</span>
+              </h2>
+
+              <div className="mt-7 space-y-4">
+                {MATERIALS.map((material, index) => (
+                  <div
+                    key={material.title}
+                    className="rounded-[1.5rem] border px-5 py-5"
+                    style={{
+                      borderColor: "rgba(120,88,37,0.12)",
+                      background: "rgba(255,255,255,0.55)",
+                    }}
+                  >
+                    <div className="flex gap-4">
+                      <div className="font-serif text-3xl text-[#b68931]">0{index + 1}</div>
+                      <div>
+                        <h3 className="font-serif text-2xl font-semibold text-[#171310]">
+                          {material.title}
+                        </h3>
+                        <p className="mt-2 text-sm leading-7 text-[#665f56]">{material.text}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ═══════════════ CTA ═══════════════ */}
-      <section className="relative py-28 px-4 sm:px-8 overflow-hidden"
-        style={{ background: "linear-gradient(150deg, #1a0505 0%, #0b1d3a 100%)" }}>
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")", backgroundSize: "200px 200px" }} />
-
-        <motion.div
-          initial={{ opacity: 0, y: 36 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 max-w-2xl mx-auto text-center"
-        >
-          <p className="text-xs font-bold tracking-[0.4em] uppercase mb-6" style={{ color: "#d4af37" }}>
-            ✦ Επισκεφθείτε μας ✦
-          </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
-            Ελάτε στο{" "}
-            <span style={{
-              background: "linear-gradient(135deg, #d4af37, #f5e17a)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>εργαστήριό μας</span>
+      <section className="page-shell mt-24">
+        <motion.div {...fadeUp} className="max-w-3xl">
+          <span className="section-eyebrow">Υπηρεσίες</span>
+          <h2 className="section-title mt-6 text-5xl text-[#171310] sm:text-6xl">
+            Τι αναλαμβάνει
+            <span className="block text-[#8c1d18]">το εργαστήριο</span>
           </h2>
-          <p className="text-lg leading-relaxed mb-10" style={{ color: "rgba(255,255,255,0.55)" }}>
-            Πραξιτέλους 161, Πειραιάς 18535. Επισκεφθείτε το εργαστήριο αγιογραφίας ή επικοινωνήστε
-            μαζί μας για ειδικές παραγγελίες, συντηρήσεις ή εκτιμήσεις.
+          <p className="mt-6 max-w-2xl text-base leading-8 text-[#665f56]">
+            Από νέα έργα κατά παραγγελία έως συντήρηση και εκτίμηση εικόνων, η προσέγγιση
+            παραμένει άμεση, προσεκτική και βασισμένη στη σωστή αντιστοίχιση του έργου με τον χώρο
+            και τη χρήση του.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-bold tracking-widest uppercase text-sm text-white transition-all duration-300 hover:scale-105"
-              style={{
-                background: "linear-gradient(135deg, #8b0000, #6b0000)",
-                boxShadow: "0 0 40px rgba(139,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)",
-              }}>
-              Επικοινωνήστε μαζί μας <ArrowRight size={16} />
-            </button>
-            <a href="tel:2104297090"
-              className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-bold tracking-widest uppercase text-sm transition-all duration-300 hover:scale-105"
-              style={{
-                border: "1px solid rgba(212,175,55,0.5)",
-                color: "#d4af37",
-              }}>
-              210 429 7090
-            </a>
-          </div>
         </motion.div>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {SERVICES.map((service, index) => {
+            const Icon = ICON_MAP[service.iconName];
+
+            return (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className="surface-card rounded-[1.75rem] p-6"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/65 text-[#b68931]">
+                  <Icon size={20} />
+                </div>
+                <h3 className="mt-5 font-serif text-3xl font-semibold text-[#171310]">
+                  {service.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-[#665f56]">{service.desc}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="mt-10 overflow-hidden rounded-[2rem] bg-[#171310] px-8 py-10 text-[#f7efe2] shadow-[0_22px_60px_rgba(20,14,11,0.16)] sm:px-10">
+          <div className="grid gap-6 lg:grid-cols-[1.05fr_.95fr] lg:items-end">
+            <div>
+              <p className="text-[0.72rem] font-bold uppercase tracking-[0.3em] text-[#d8b05b]">
+                Επικοινωνία
+              </p>
+              <h2 className="section-title mt-5 text-5xl text-white sm:text-6xl">
+                Θέλετε να
+                <span className="block text-[#d8b05b]">συζητήσουμε ένα έργο;</span>
+              </h2>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-white/68">
+                Η πρώτη επικοινωνία γίνεται απλά: μία σύντομη συζήτηση για το θέμα, το μέγεθος, τον
+                χώρο και τον χρόνο παράδοσης. Από εκεί οργανώνεται η σωστή κατεύθυνση για το έργο.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+              <button type="button" onClick={() => setIsModalOpen(true)} className="primary-button">
+                Επικοινωνήστε μαζί μας
+                <ArrowRight size={16} />
+              </button>
+              <Link href="/contact" className="secondary-button !border-white/20 !bg-white/8 !text-white">
+                Σελίδα επικοινωνίας
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );

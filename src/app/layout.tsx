@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Lora } from "next/font/google";
+import { EB_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SITE } from "@/data/site";
 
-const inter = Inter({
-  variable: "--font-sans",
+const bodyFont = Manrope({
+  variable: "--font-body",
   subsets: ["latin", "greek"],
+  display: "swap",
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-serif",
-  subsets: ["latin"],
+const displayFont = EB_Garamond({
+  variable: "--font-display",
+  subsets: ["latin", "greek"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Gulielmos | Χειροποίητες Βυζαντινές Αγιογραφίες",
-  description: "Υψηλής αισθητικής χειροποίητες βυζαντινές αγιογραφίες με αυγοτέμπερα και φύλλα χρυσού.",
+  title: {
+    default: SITE.title,
+    template: "%s | Gulielmos",
+  },
+  description: SITE.description,
+  applicationName: SITE.name,
 };
 
 export default function RootLayout({
@@ -25,16 +32,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="el"
-      className={`${inter.variable} ${playfair.variable} h-full antialiased transition-colors`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-full flex flex-col font-sans" style={{ background: "#fdfbf5" }}>
+    <html lang="el" className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}>
+      <body className="min-h-full bg-background font-sans text-foreground">
         <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>
